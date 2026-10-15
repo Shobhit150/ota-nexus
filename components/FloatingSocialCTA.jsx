@@ -7,7 +7,7 @@ export default function FloatingSocialCTA() {
     <div className="fixed bottom-6 right-5 z-[100] flex flex-col gap-3 sm:bottom-8 sm:right-8">
       {/* WhatsApp */}
       <a
-        href="https://wa.me/919560440478"
+        href="https://wa.me/919560440478?text=Hi%2C%20I%E2%80%99m%20interested%20in%20your%20services%20for%20my%20property.%20Could%20you%20please%20share%20more%20details%3F"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp"

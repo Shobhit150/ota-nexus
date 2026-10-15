@@ -49,7 +49,7 @@ export default function Contact() {
             {/* Direct WhatsApp link */}
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
-                href="https://wa.me/919560440478"
+                href="https://wa.me/919560440478?text=Hi%2C%20I%E2%80%99m%20interested%20in%20your%20services%20for%20my%20property.%20Could%20you%20please%20share%20more%20details%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Continue to WhatsApp chat"
@@ -98,7 +98,7 @@ export default function Contact() {
             <p className="text-xs text-[#969aa5]">WhatsApp</p>
 
             <a
-              href="https://wa.me/919560440478"
+              href="https://wa.me/919560440478?text=Hi%2C%20I%E2%80%99m%20interested%20in%20your%20services%20for%20my%20property.%20Could%20you%20please%20share%20more%20details%3F"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-1 inline-block text-sm text-[#e1c786] transition hover:underline"

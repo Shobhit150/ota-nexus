@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -5,12 +6,12 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { name: "Services", href: "#services" },
-  { name: "How We Work", href: "#how-we-work" },
-  { name: "Reporting", href: "#reporting" },
-  { name: "Case Studies", href: "#case-studies" },
+  { name: "Services", href: "/#services" },
+  { name: "How We Work", href: "/#how-we-work" },
+  { name: "Reporting", href: "/#reporting" },
+  { name: "Case Studies", href: "/#case-studies" },
   { name: "Blogs", href: "/blog" },
-  { name: "Contact", href: "#contact" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 const Navbar = () => {
@@ -30,18 +31,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.header
-      animate={{
-        backgroundColor:
-          scrolled || menuOpen ? "#0c0f14" : "rgba(12, 15, 20, 0)",
-        borderColor:
-          scrolled || menuOpen
-            ? "rgba(255,255,255,0.1)"
-            : "rgba(255,255,255,0)",
-      }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="sticky top-0 z-50 w-full border-b"
-    >
+    <motion.header className="sticky top-0 z-50 w-full border-b border-transparent">
       <nav className="mx-auto flex h-[84px] max-w-[1640px] items-center justify-between px-5 sm:px-8 lg:px-10 xl:px-12">
         {/* Logo */}
         <Link
@@ -68,12 +58,10 @@ const Navbar = () => {
 
         {/* Desktop CTA */}
         <Link
-          href="#contact"
-        className="hidden shrink-0 items-center justify-center rounded-full bg-[#cbb071] px-4 py-2 text-center text-[12px] font-medium tracking-[0.07em] text-black transition-colors duration-300 hover:bg-[#dfc58c] md:flex 2xl:px-10 2xl:text-[17px]">
-            <div className="text-black">
-                LET&apos;S GROW YOUR PROPERTY
-            </div>
-          
+          href="/#contact"
+          className="hidden shrink-0 items-center justify-center rounded-full bg-[#cbb071] px-4 py-2 text-center text-[12px] font-medium tracking-[0.07em] !text-black transition-colors duration-300 hover:bg-[#dfc58c] md:flex 2xl:px-10 2xl:text-[17px]"
+        >
+          LET&apos;S GROW YOUR PROPERTY
         </Link>
 
         {/* Mobile Menu Button */}
@@ -81,7 +69,9 @@ const Navbar = () => {
           type="button"
           onClick={() => setMenuOpen((prev) => !prev)}
           className="flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-lg border border-white/10 xl:hidden"
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={
+            menuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
         >
@@ -109,7 +99,7 @@ const Navbar = () => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden border-t border-white/10 bg-[#0c0f14] xl:hidden"
+            className="overflow-hidden border-t border-white/10 xl:hidden"
           >
             <div className="mx-auto flex max-w-[1640px] flex-col px-5 py-4 sm:px-8">
               {navLinks.map((link, index) => (
@@ -129,10 +119,11 @@ const Navbar = () => {
                 </motion.div>
               ))}
 
+              {/* Mobile CTA */}
               <Link
-                href="#contact"
+                href="/#contact"
                 onClick={() => setMenuOpen(false)}
-                className="mt-5 flex min-h-14 items-center justify-center rounded-full bg-[#cbb071] px-5 text-center text-sm font-medium tracking-wider text-[#101116] transition-colors hover:bg-[#dfc58c]"
+                className="mt-5 flex min-h-14 items-center justify-center rounded-full bg-[#cbb071] px-5 text-center text-sm font-medium tracking-wider !text-black transition-colors hover:bg-[#dfc58c]"
               >
                 LET&apos;S GROW YOUR PROPERTY
               </Link>

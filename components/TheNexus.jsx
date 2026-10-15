@@ -280,7 +280,7 @@ export default function TheNexus() {
           </div>
 
           <Link
-            href="#contact"
+            href="https://wa.me/919560440478"
             className="mt-4 inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[#cbb071] px-5 text-[10px] font-semibold uppercase tracking-wide text-[#101116] transition-colors hover:bg-[#dfc58c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cbb071] sm:mt-0 sm:shrink-0"
           >
             Discuss your property

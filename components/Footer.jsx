@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import { FaWhatsapp } from "react-icons/fa";
 
 const exploreLinks = [
   { name: "Services", href: "#services" },
@@ -88,31 +89,21 @@ export default function Footer() {
                 href="https://wa.me/919560440478"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Contact us on WhatsApp"
                 className="group flex items-start gap-3 text-sm text-[#a9a8a5] transition hover:text-[#e3ca91]"
-              >
-                <span className="mt-0.5 shrink-0 text-[#c8a968]">
-                  <svg
-                    width="17"
-                    height="17"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-5.3A8.4 8.4 0 1 1 21 11.5Z" />
-                    <path d="M8.5 8.5c.4 2 2 3.6 4 4" />
-                  </svg>
-                </span>
+            >
+                <FaWhatsapp
+                size={18}
+                className="mt-0.5 shrink-0 text-[#e3ca91] transition-transform group-hover:scale-110"
+                />
+
                 <span>
-                  <span className="block text-[#e0ddd6]">WhatsApp</span>
-                  <span className="mt-0.5 block text-xs text-[#858892]">
+                <span className="block text-[#e0ddd6]">WhatsApp</span>
+                <span className="mt-0.5 block text-xs text-[#858892]">
                     +91 95604 40478
-                  </span>
                 </span>
-              </a>
+                </span>
+            </a>
 
               <a
                 href="mailto:otanexus0@gmail.com"
@@ -137,7 +128,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://www.instagram.com/"
+                href="https://www.instagram.com/ota_nexus?mdxt=MnVucGUwMHcweTdq"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 text-sm text-[#a9a8a5] transition hover:text-[#e3ca91]"

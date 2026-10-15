@@ -7,7 +7,7 @@ export default function FloatingSocialCTA() {
     <div className="fixed bottom-6 right-5 z-[100] flex flex-col gap-3 sm:bottom-8 sm:right-8">
       {/* WhatsApp */}
       <a
-        href="https://wa.me/91XXXXXXXXXX"
+        href="https://wa.me/919560440478"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp"
@@ -18,7 +18,7 @@ export default function FloatingSocialCTA() {
 
       {/* Instagram */}
       <a
-        href="https://instagram.com/yourusername"
+        href="https://www.instagram.com/ota_nexus?mdxt=MnVucGUwMHcweTdq"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Instagram"

@@ -418,7 +418,7 @@ export default function RevenueEstimator() {
             </details>
 
             <Link
-              href="#contact"
+              href="https://wa.me/919560440478"
               className="mt-5 flex min-h-11 w-full items-center justify-center rounded-full bg-[#cbb071] px-5 py-3 text-center text-xs font-semibold text-[#11131a] transition hover:bg-[#dfc58c]"
             >
               Discuss your property

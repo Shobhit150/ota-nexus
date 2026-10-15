@@ -10,7 +10,7 @@ const caseStudies = [
     title: "Improving OTA Performance",
     service: "OTA Management",
     image:
-      "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=85",
+      "/otaperformance.webp",
     challenge:
       "Listings were inconsistent across booking platforms, and the property wasn't presented as clearly as it could be online.",
     strategy:
@@ -38,7 +38,7 @@ const caseStudies = [
     title: "Digital Distribution for a Business Hotel",
     service: "Online Distribution",
     image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85",
+      "/onlinedistribution.webp",
     challenge:
       "Managing several booking platforms made listings, availability and promotions hard to keep organised.",
     strategy:

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -16,8 +15,7 @@ const services = [
     title: "OTA Management & Distribution",
     description:
       "Your listings are hard to find, inconsistent across platforms, or difficult to keep updated.",
-    image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
+    image: "/otamanagement.webp",
     benefits: [
       "OTA listing creation and optimisation",
       "Booking.com, Expedia and Agoda management",
@@ -30,8 +28,7 @@ const services = [
     title: "Revenue Management & Pricing Strategy",
     description:
       "Prices feel like guesswork, and you are unsure whether you are leaving money on the table.",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=85",
     benefits: [
       "Seasonal pricing and rate optimisation",
       "Competitor and market analysis",
@@ -44,8 +41,7 @@ const services = [
     title: "Performance Marketing & Paid Advertising",
     description:
       "Ad spend keeps rising, but it is hard to see which campaigns generate real enquiries or bookings.",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=85",
+    image: "/performancemarketing.webp",
     benefits: [
       "Google and Meta advertising campaigns",
       "Audience targeting and retargeting",
@@ -60,8 +56,7 @@ const services = [
     title: "Social Media & Content Marketing",
     description:
       "Inconsistent posting makes it harder to communicate what makes your property special.",
-    image:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85",
+    image: "/social.webp",
     benefits: [
       "Social media planning and calendars",
       "Property-focused content creation",
@@ -74,8 +69,7 @@ const services = [
     title: "Website Development & Direct Bookings",
     description:
       "Guests visit your website but do not enquire or book, leaving you reliant on OTA commissions.",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85",
     benefits: [
       "Modern, mobile-friendly property websites",
       "Direct booking journey optimisation",
@@ -88,8 +82,7 @@ const services = [
     title: "Branding & Creative",
     description:
       "Your property looks and sounds like every other listing.",
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=85",
+    image: "/branding.webp",
     benefits: [
       "Brand identity and positioning",
       "Visual direction and creative assets",
@@ -103,8 +96,7 @@ const services = [
     title: "Reputation & Guest Experience",
     description:
       "Reviews go unanswered, or the same guest complaints keep returning.",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85",
+    image: "/reputation.webp",
     benefits: [
       "Review monitoring and response support",
       "Guest feedback analysis",
@@ -117,8 +109,7 @@ const services = [
     title: "Sales & Partnerships",
     description:
       "Your business relies on walk-ins and OTAs, with limited corporate or travel-trade demand.",
-    image:
-      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=85",
+    image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=85",
     benefits: [
       "Corporate account development",
       "Travel agent and tour operator outreach",
@@ -151,11 +142,9 @@ function ServiceCard({
         service.featured
           ? "border-[#8e7545]/60"
           : "border-white/10"
-      } ${
-        service.horizontal ? "lg:col-span-2 lg:flex" : ""
-      }`}
+      } ${service.horizontal ? "lg:col-span-2 lg:flex" : ""}`}
     >
-      {/* Image */}
+      {/* Local WebP image */}
       <div
         className={`relative shrink-0 overflow-hidden ${
           service.horizontal
@@ -172,17 +161,17 @@ function ServiceCard({
               ? "(min-width: 1024px) 38vw, 100vw"
               : "(min-width: 768px) 50vw, 100vw"
           }
-          unoptimized
           className={`object-cover ${
             reduceMotion
               ? ""
               : "transition-transform duration-700 group-hover:scale-105"
           }`}
         />
+
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
-      {/* Content */}
+      {/* Service content */}
       <div className="flex min-w-0 flex-1 flex-col p-4 lg:p-4">
         <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#cbb071]">
           Service {service.letter}
@@ -209,7 +198,9 @@ function ServiceCard({
 
             <motion.span
               animate={{ rotate: expanded ? 45 : 0 }}
-              transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.2,
+              }}
               className="text-lg font-light text-[#cbb071]"
               aria-hidden="true"
             >
@@ -249,6 +240,7 @@ function ServiceCard({
                       >
                         —
                       </span>
+
                       <span>{benefit}</span>
                     </li>
                   ))}
@@ -300,9 +292,9 @@ export default function Services() {
           </h2>
 
           <p className="mt-4 max-w-2xl text-sm leading-6 text-[#cbc7c0] sm:text-base sm:leading-7">
-            Use only what your property needs. We understand your goals
-            and recommend relevant services instead of pushing a
-            one-size-fits-all package.
+            Use only what your property needs. We understand your
+            goals and recommend relevant services instead of
+            pushing a one-size-fits-all package.
           </p>
         </motion.div>
 

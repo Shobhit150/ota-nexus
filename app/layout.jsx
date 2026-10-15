@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body>
-        <a href="#main" className="absolute -top-16 left-3 z-[100] rounded-lg bg-gold px-4 py-2.5 text-bg focus:top-3">Skip to content</a>
+        <a href="#main" className=""></a>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         {children}
       </body>

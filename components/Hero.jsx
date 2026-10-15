@@ -51,7 +51,7 @@ const Hero = () => {
                             href="#contact"
                             className="inline-flex min-h-[60px] items-center justify-center rounded-full bg-[#cbb071] px-8 text-center text-xs font-semibold uppercase tracking-[0.07em] text-[#101116] transition-all duration-300 hover:bg-[#dec58d] sm:px-9 sm:text-sm"
                         >
-                            Let’s Grow Your Property
+                            Let's Grow Your Property
                         </Link>
 
                         <Link

@@ -82,8 +82,6 @@ export default function BlogListing({ posts = [] }) {
 
         const category = post.category || "Hospitality";
 
-
-
         const matchesCategory =
 
           activeCategory === "All articles" ||
@@ -130,7 +128,7 @@ export default function BlogListing({ posts = [] }) {
 
   return (
 
-    <main className="min-h-screen bg-[#10131c] text-[#f2efe9]">
+    <main className="min-h-screen text-[#f2efe9]">
 
       {/* Introduction */}
 

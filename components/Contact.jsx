@@ -55,7 +55,8 @@ export default function Contact() {
                 aria-label="Continue to WhatsApp chat"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#cbb071] px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#10131b] transition hover:bg-[#dfc58c] sm:px-7"
               >
-                <svg
+                <div className="text-black flex gap-2 items-center">
+                  <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
@@ -67,6 +68,8 @@ export default function Contact() {
 
                 Continue on WhatsApp
                 <span aria-hidden="true">↗</span>
+                </div>
+                
               </a>
 
               <a

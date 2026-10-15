@@ -1,6 +1,8 @@
 
 import { getAllPosts } from "@/lib/blogs";
 import BlogListing from "./BlogListing";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "IoT & OTA Insights | OTA Nexus Blog",
@@ -20,5 +22,9 @@ export const metadata = {
 
 export default function BlogPage() {
   const posts = getAllPosts();
-  return <BlogListing posts={posts} />;
+  return <>
+    <Navbar/>
+    <BlogListing posts={posts} />
+    <Footer/>
+  </>;
 }

@@ -6,11 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "Services", href: "#services" },
-  { name: "Performance Marketing", href: "#performance-marketing" },
   { name: "How We Work", href: "#how-we-work" },
   { name: "Reporting", href: "#reporting" },
   { name: "Case Studies", href: "#case-studies" },
-  { name: "FAQs", href: "#faqs" },
+  { name: "Blogs", href: "/blog" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -70,9 +69,11 @@ const Navbar = () => {
         {/* Desktop CTA */}
         <Link
           href="#contact"
-          className="hidden shrink-0 items-center justify-center rounded-full bg-[#cbb071] px-8 py-4 text-center text-[15px] font-medium tracking-[0.07em] text-[#101116] transition-colors duration-300 hover:bg-[#dfc58c] md:flex 2xl:px-10 2xl:text-[17px]"
-        >
-          LET&apos;S GROW YOUR PROPERTY
+        className="hidden shrink-0 items-center justify-center rounded-full bg-[#cbb071] px-4 py-2 text-center text-[12px] font-medium tracking-[0.07em] text-black transition-colors duration-300 hover:bg-[#dfc58c] md:flex 2xl:px-10 2xl:text-[17px]">
+            <div className="text-black">
+                LET&apos;S GROW YOUR PROPERTY
+            </div>
+          
         </Link>
 
         {/* Mobile Menu Button */}

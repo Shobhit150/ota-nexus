@@ -4,11 +4,10 @@ import { FaWhatsapp } from "react-icons/fa";
 
 const exploreLinks = [
   { name: "Services", href: "#services" },
-  { name: "Performance Marketing", href: "#performance-marketing" },
   { name: "How We Work", href: "#how-we-work" },
   { name: "Reporting", href: "#reporting" },
   { name: "Case Studies", href: "#case-studies" },
-  { name: "FAQs", href: "#faqs" },
+  { name: "Blogs", href: "/blog" },
 ];
 
 const ArrowUpRight = () => (

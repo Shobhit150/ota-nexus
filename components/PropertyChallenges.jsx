@@ -1,96 +1,102 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const challenges = [
   {
-    title: "Low occupancy in slower periods",
+    title: "Low Occupancy in Slower Periods",
     description:
-      "We look at pricing, visibility and demand before suggesting a fix.",
+      "We assess pricing, visibility, and demand to identify opportunities to improve occupancy.",
   },
   {
-    title: "Weak visibility on OTAs",
+    title: "Weak Visibility on OTAs",
     description:
-      "We improve listings, content, promotions and how you appear in search results.",
+      "We optimise listings, content, and promotions to help your property stand out in search results.",
   },
   {
-    title: "Pricing that feels like guesswork",
+    title: "Uncertain Pricing Decisions",
     description:
-      "We build a rate and promotion strategy around your market and seasons.",
+      "We develop rate and promotion strategies based on your market, competitors, and seasonal demand.",
   },
   {
-    title: "Too dependent on third-party bookings",
+    title: "Overdependence on Third-Party Bookings",
     description:
-      "We support direct-booking journeys and campaigns that bring guests to you.",
+      "We strengthen your direct-booking journey and campaigns to help attract guests to your property.",
   },
   {
-    title: "Inconsistent social media",
+    title: "Inconsistent Social Media",
     description:
-      "We plan content around your property and the destination, then keep it going.",
+      "We plan relevant content around your property and destination to build a consistent online presence.",
   },
   {
-    title: "Rising advertising costs",
+    title: "Rising Advertising Costs",
     description:
-      "We run tracked, tested campaigns so spend is tied to enquiries and bookings.",
+      "We test and track campaigns to understand performance and make better use of your advertising budget.",
   },
   {
-    title: "Enquiries that don’t convert",
+    title: "Enquiries That Don't Convert",
     description:
-      "We tighten landing pages, booking journeys and follow-up.",
+      "We improve landing pages, booking journeys, and follow-up processes to reduce friction.",
   },
 ];
 
 const PropertyChallenges = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="property-challenges"
       className="bg-[#10131c] text-[#f1eee8]"
     >
-      <div className="mx-auto max-w-[1640px] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
         {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.5 }}
         >
-          <p className="mb-6 text-xs font-medium uppercase tracking-[0.22em] text-[#cbb071] sm:text-sm">
-            Sound familiar?
+          <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#cbb071] sm:text-xs">
+            Sound Familiar?
           </p>
 
-          <h2 className="max-w-[1450px] text-[clamp(2.3rem,4.1vw,4.25rem)] font-normal leading-[1.12] tracking-[-0.045em]">
+          <h2 className="max-w-3xl text-3xl font-normal leading-tight tracking-[-0.035em] sm:text-4xl lg:text-[44px] lg:leading-[1.15]">
             Running a property is hard enough.{" "}
             <span className="font-serif italic text-[#cbb071]">
-              Getting found shouldn’t be.
+              Getting found shouldn't be.
             </span>
           </h2>
 
-          <p className="mt-7 max-w-[800px] text-base leading-8 text-[#c8c5bf] sm:text-lg sm:leading-[1.8]">
-            Not every property has every problem. These are the ones we hear
-            most often, and what we do about them.
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-[#bcb9b3] sm:text-base sm:leading-8">
+            Every property faces different challenges. Here are some common
+            issues we help hospitality businesses address.
           </p>
         </motion.div>
 
         {/* Challenges grid */}
-        <div className="mt-12 grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-x-[60px]">
+        <div className="mt-9 grid grid-cols-1 gap-x-7 sm:grid-cols-2 lg:mt-11 lg:grid-cols-3 lg:gap-x-9">
           {challenges.map((challenge, index) => (
             <motion.article
               key={challenge.title}
-              initial={{ opacity: 0, y: 18 }}
+              initial={
+                shouldReduceMotion ? false : { opacity: 0, y: 12 }
+              }
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{
-                duration: 0.45,
-                delay: (index % 3) * 0.08,
+                duration: shouldReduceMotion ? 0 : 0.4,
+                delay: shouldReduceMotion ? 0 : (index % 3) * 0.06,
               }}
-              className="border-t border-white/15 py-6 sm:py-7"
+              className="group flex h-full flex-col border-t border-white/10 py-5 sm:py-6"
             >
-              <h3 className="text-lg font-medium leading-snug tracking-tight text-[#f1eee8] sm:text-xl">
+              <div className="mb-3 h-px w-8 bg-[#cbb071]/70 transition-all duration-300 group-hover:w-12" />
+
+              <h3 className="text-base font-semibold leading-snug tracking-tight text-[#f1eee8] sm:text-[17px]">
                 {challenge.title}
               </h3>
 
-              <p className="mt-1.5 text-[15px] leading-[1.8] text-[#bcb9b3] sm:text-base">
+              <p className="mt-2 text-sm leading-6 text-[#bcb9b3] sm:text-[15px] sm:leading-7">
                 {challenge.description}
               </p>
             </motion.article>

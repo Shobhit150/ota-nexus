@@ -1,14 +1,15 @@
+
 "use client";
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 
 const currencies = {
-  INR: { label: "₹ INR", symbol: "₹", locale: "en-IN" },
-  USD: { label: "$ USD", symbol: "$", locale: "en-US" },
-  GBP: { label: "£ GBP", symbol: "£", locale: "en-GB" },
-  EUR: { label: "€ EUR", symbol: "€", locale: "de-DE" },
-  AUD: { label: "A$ AUD", symbol: "A$", locale: "en-AU" },
+  INR: { label: "₹ INR", locale: "en-IN" },
+  USD: { label: "$ USD", locale: "en-US" },
+  GBP: { label: "£ GBP", locale: "en-GB" },
+  EUR: { label: "€ EUR", locale: "de-DE" },
+  AUD: { label: "A$ AUD", locale: "en-AU" },
 };
 
 const propertyTypes = [
@@ -19,19 +20,60 @@ const propertyTypes = [
   "Airbnb / Vacation Rental",
 ];
 
-const numberFormat = (value, currency) =>
+const formatMoney = (value, currency) =>
   new Intl.NumberFormat(currencies[currency].locale, {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
   }).format(value);
 
-const integerFormat = (value) =>
+const formatNumber = (value) =>
   new Intl.NumberFormat("en-IN", {
     maximumFractionDigits: 0,
   }).format(value);
 
-const percentFormat = (value) => `${value.toFixed(1)}%`;
+const inputClass =
+  "h-10 w-full min-w-0 rounded-lg border border-white/15 bg-[#11141c] px-3 text-sm text-white outline-none transition focus:border-[#cbb071]";
+
+function Field({ label, children }) {
+  return (
+    <label className="block min-w-0">
+      <span className="mb-1.5 block text-xs text-[#aaa9a4]">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
+function RangeField({
+  label,
+  value,
+  min,
+  max,
+  suffix = "%",
+  onChange,
+}) {
+  return (
+    <div className="min-w-0">
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <label className="text-xs text-[#c7c5bf]">{label}</label>
+        <span className="text-xs font-medium text-[#cbb071]">
+          {value}{suffix}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step="1"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="h-1.5 w-full cursor-pointer accent-[#cbb071]"
+      />
+    </div>
+  );
+}
 
 export default function RevenueEstimator() {
   const [propertyType, setPropertyType] = useState("Hotel");
@@ -39,18 +81,16 @@ export default function RevenueEstimator() {
   const [rooms, setRooms] = useState(20);
   const [rate, setRate] = useState(3500);
   const [occupancy, setOccupancy] = useState(55);
+
   const [otaShare, setOtaShare] = useState(60);
   const [commission, setCommission] = useState(15);
-
   const [occupancyIncrease, setOccupancyIncrease] = useState(5);
   const [rateIncrease, setRateIncrease] = useState(5);
   const [directShift, setDirectShift] = useState(10);
 
   const results = useMemo(() => {
-    const days = 365;
-
     const calculate = (occ, nightlyRate, platformShare) => {
-      const roomNights = rooms * days * (occ / 100);
+      const roomNights = rooms * 365 * (occ / 100);
       const revenue = roomNights * nightlyRate;
       const commissionPaid =
         revenue * (platformShare / 100) * (commission / 100);
@@ -59,7 +99,6 @@ export default function RevenueEstimator() {
         roomNights,
         occupancy: occ,
         rate: nightlyRate,
-        revpar: (occ / 100) * nightlyRate,
         revenue,
         commissionPaid,
         netRevenue: revenue - commissionPaid,
@@ -67,25 +106,18 @@ export default function RevenueEstimator() {
     };
 
     const today = calculate(occupancy, rate, otaShare);
-
-    const improvedOccupancy = Math.min(
-      100,
-      occupancy + occupancyIncrease
-    );
-
-    const improvedRate = rate * (1 + rateIncrease / 100);
-    const improvedOtaShare = Math.max(0, otaShare - directShift);
-
     const improved = calculate(
-      improvedOccupancy,
-      improvedRate,
-      improvedOtaShare
+      Math.min(100, occupancy + occupancyIncrease),
+      rate * (1 + rateIncrease / 100),
+      Math.max(0, otaShare - directShift)
     );
 
     return {
       today,
       improved,
       extraNet: improved.netRevenue - today.netRevenue,
+      commissionSaved:
+        today.commissionPaid - improved.commissionPaid,
     };
   }, [
     rooms,
@@ -98,303 +130,307 @@ export default function RevenueEstimator() {
     directShift,
   ]);
 
-  const rows = [
-    {
-      label: "Room nights sold / year",
-      today: integerFormat(results.today.roomNights),
-      improved: integerFormat(results.improved.roomNights),
-    },
-    {
-      label: "Occupancy",
-      today: percentFormat(results.today.occupancy),
-      improved: percentFormat(results.improved.occupancy),
-    },
-    {
-      label: "Average nightly rate",
-      today: numberFormat(results.today.rate, currency),
-      improved: numberFormat(results.improved.rate, currency),
-    },
-    {
-      label: "Revenue per available room (RevPAR)",
-      today: numberFormat(results.today.revpar, currency),
-      improved: numberFormat(results.improved.revpar, currency),
-    },
+  const breakdown = [
     {
       label: "Annual room revenue",
-      today: numberFormat(results.today.revenue, currency),
-      improved: numberFormat(results.improved.revenue, currency),
+      today: results.today.revenue,
+      improved: results.improved.revenue,
     },
     {
-      label: "Platform commission paid",
-      today: numberFormat(results.today.commissionPaid, currency),
-      improved: numberFormat(results.improved.commissionPaid, currency),
+      label: "Platform commission",
+      today: results.today.commissionPaid,
+      improved: results.improved.commissionPaid,
     },
     {
-      label: "Net revenue after commission",
-      today: numberFormat(results.today.netRevenue, currency),
-      improved: numberFormat(results.improved.netRevenue, currency),
+      label: "Revenue after commission",
+      today: results.today.netRevenue,
+      improved: results.improved.netRevenue,
     },
   ];
-
-  const Field = ({ label, children }) => (
-    <label className="block min-w-0">
-      <span className="mb-2 block text-[10px] font-medium uppercase tracking-[0.12em] text-[#a5a29d] sm:text-[11px]">
-        {label}
-      </span>
-      {children}
-    </label>
-  );
-
-  const inputClass =
-    "h-[46px] w-full rounded-xl border border-white/25 bg-transparent px-3 text-sm text-[#f3f0e9] outline-none transition focus:border-[#cbb071] sm:h-[52px] sm:px-4 sm:text-base";
-
-  const Slider = ({ label, value, min, max, onChange, suffix = " points" }) => (
-    <div className="min-w-0">
-      <div className="mb-3 flex min-h-8 items-start justify-between gap-2">
-        <span className="text-[10px] uppercase leading-4 tracking-[0.1em] text-[#aaa7a1] sm:text-[11px]">
-          {label}
-        </span>
-        <span className="shrink-0 text-xs text-[#cbb071]">
-          {value}{suffix}
-        </span>
-      </div>
-
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={1}
-        value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
-        className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/25 accent-[#cbb071]"
-      />
-    </div>
-  );
 
   return (
     <section
       id="revenue-estimator"
-      className="bg-[#10131b] px-5 py-16 text-[#f3f0e9] sm:px-8 sm:py-20 lg:px-12 lg:py-24"
+      className="bg-[#10131b] px-4 py-14 text-[#f3f0e9] sm:px-6 sm:py-16 lg:px-8"
     >
-      <div className="mx-auto max-w-[1360px]">
-        {/* Section heading */}
-        <div className="mb-10 max-w-[900px] sm:mb-12">
-          <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.22em] text-[#cbb071] sm:text-xs">
-            Illustrative Estimate
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-7 max-w-xl">
+          <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#cbb071]">
+            Revenue calculator
           </p>
-
-          <h2 className="text-3xl font-normal leading-tight tracking-[-0.045em] sm:text-4xl lg:text-5xl">
-            Estimate your room-revenue{" "}
+          <h2 className="text-3xl font-normal leading-tight tracking-tight sm:text-4xl">
+            What could your property{" "}
             <span className="font-serif italic text-[#cbb071]">
-              potential.
+              earn?
             </span>
           </h2>
-
-          <p className="mt-5 max-w-[620px] text-sm leading-7 text-[#d0cec9] sm:text-base sm:leading-[1.9]">
-            For hotels, resorts, villas, homestays, Airbnbs and vacation
-            rentals. Enter your own numbers, then set the improvements you
-            want to test. The result is a simple what-if, not client data
-            and not a promise.
+          <p className="mt-3 text-sm leading-6 text-[#aaa9a4]">
+            Enter three numbers to get a quick estimate. Adjust the
+            assumptions only if you want a more tailored result.
           </p>
         </div>
 
-        {/* Estimator panel */}
-        <div className="rounded-[22px] border border-white/15 bg-[#191c25] p-5 sm:p-8 lg:p-10">
-          {/* Input fields */}
-          <div className="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-5">
-            <Field label="Property type">
-              <select
-                value={propertyType}
-                onChange={(e) => setPropertyType(e.target.value)}
-                className={inputClass}
-              >
-                {propertyTypes.map((type) => (
-                  <option key={type} value={type} className="bg-[#191c25]">
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </Field>
-
-            <Field label="Currency">
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                className={inputClass}
-              >
-                {Object.entries(currencies).map(([key, item]) => (
-                  <option key={key} value={key} className="bg-[#191c25]">
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </Field>
-
-            <Field label="Rooms / units available to rent">
-              <input
-                type="number"
-                min="1"
-                max="100000"
-                value={rooms}
-                onChange={(e) =>
-                  setRooms(Math.max(1, Math.min(100000, Number(e.target.value) || 1)))
-                }
-                className={inputClass}
-              />
-            </Field>
-
-            <Field label="Average nightly rate">
-              <input
-                type="number"
-                min="1"
-                max="100000000"
-                value={rate}
-                onChange={(e) =>
-                  setRate(Math.max(1, Math.min(100000000, Number(e.target.value) || 1)))
-                }
-                className={inputClass}
-              />
-            </Field>
-
-            <Field label="Current occupancy (%)">
-              <input
-                type="number"
-                min="0"
-                max="100"
-                value={occupancy}
-                onChange={(e) =>
-                  setOccupancy(Math.max(0, Math.min(100, Number(e.target.value) || 0)))
-                }
-                className={inputClass}
-              />
-            </Field>
-
-            <Field label="Bookings via OTAs / platforms (%)">
-              <input
-                type="number"
-                min="0"
-                max="100"
-                value={otaShare}
-                onChange={(e) =>
-                  setOtaShare(Math.max(0, Math.min(100, Number(e.target.value) || 0)))
-                }
-                className={inputClass}
-              />
-            </Field>
-
-            <Field label="Average platform commission (%)">
-              <input
-                type="number"
-                min="0"
-                max="100"
-                value={commission}
-                onChange={(e) =>
-                  setCommission(Math.max(0, Math.min(100, Number(e.target.value) || 0)))
-                }
-                className={inputClass}
-              />
-            </Field>
-          </div>
-
-          {/* Improvement sliders */}
-          <div className="mt-9 sm:mt-10">
-            <h3 className="mb-5 text-base font-medium text-[#cbb071] sm:text-lg">
-              Improvements to test
-            </h3>
-
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-5">
-              <Slider
-                label="Occupancy increase"
-                value={occupancyIncrease}
-                min={0}
-                max={30}
-                onChange={setOccupancyIncrease}
-                suffix=" points"
-              />
-
-              <Slider
-                label="Average rate increase"
-                value={rateIncrease}
-                min={0}
-                max={50}
-                onChange={setRateIncrease}
-                suffix="%"
-              />
-
-              <Slider
-                label="Shift to direct bookings"
-                value={directShift}
-                min={0}
-                max={100}
-                onChange={setDirectShift}
-                suffix=" points"
-              />
+        <div className="grid items-start gap-4 lg:grid-cols-[1fr_0.85fr]">
+          {/* Compact form */}
+          <div className="rounded-2xl border border-white/10 bg-[#191c25] p-4 sm:p-5">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="text-sm font-medium text-white">
+                Your property
+              </h3>
+              <span className="text-[11px] text-[#898a91]">
+                Takes about 30 seconds
+              </span>
             </div>
-          </div>
 
-          {/* Results table */}
-          <div className="mt-9 overflow-hidden rounded-xl border border-white/15 sm:mt-10">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[560px] border-collapse text-left text-xs sm:text-sm">
-                <thead className="bg-white/[0.06] text-[10px] uppercase tracking-[0.1em] text-[#cbb071] sm:text-[11px]">
-                  <tr>
-                    <th className="px-3 py-3 font-medium sm:px-4">Per year</th>
-                    <th className="px-3 py-3 font-medium sm:px-4">Today</th>
-                    <th className="px-3 py-3 font-medium sm:px-4">
-                      With improvements
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {rows.map((row) => (
-                    <tr
-                      key={row.label}
-                      className="border-t border-white/10 transition-colors hover:bg-white/[0.025]"
-                    >
-                      <td className="px-3 py-3.5 text-[#e5e2dc] sm:px-4">
-                        {row.label}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-3.5 text-[#d0cec9] sm:px-4">
-                        {row.today}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-3.5 text-[#f3f0e9] sm:px-4">
-                        {row.improved}
-                      </td>
-                    </tr>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Property type">
+                <select
+                  value={propertyType}
+                  onChange={(e) => setPropertyType(e.target.value)}
+                  className={inputClass}
+                >
+                  {propertyTypes.map((type) => (
+                    <option key={type} value={type} className="bg-[#191c25]">
+                      {type}
+                    </option>
                   ))}
-                </tbody>
-              </table>
+                </select>
+              </Field>
+
+              <Field label="Currency">
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className={inputClass}
+                >
+                  {Object.entries(currencies).map(([key, item]) => (
+                    <option key={key} value={key} className="bg-[#191c25]">
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+
+              <Field label="Rooms / units">
+                <input
+                  type="number"
+                  min="1"
+                  max="100000"
+                  value={rooms}
+                  onChange={(e) =>
+                    setRooms(
+                      Math.max(1, Math.min(100000, Number(e.target.value) || 1))
+                    )
+                  }
+                  className={inputClass}
+                />
+              </Field>
+
+              <Field label="Nightly rate">
+                <input
+                  type="number"
+                  min="1"
+                  max="100000000"
+                  value={rate}
+                  onChange={(e) =>
+                    setRate(
+                      Math.max(
+                        1,
+                        Math.min(100000000, Number(e.target.value) || 1)
+                      )
+                    )
+                  }
+                  className={inputClass}
+                />
+              </Field>
+
+              <div className="col-span-2">
+                <Field label={`Average occupancy · ${occupancy}%`}>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={occupancy}
+                    onChange={(e) => setOccupancy(Number(e.target.value))}
+                    className="h-1.5 w-full cursor-pointer accent-[#cbb071]"
+                  />
+                  <div className="mt-1 flex justify-between text-[10px] text-[#85868d]">
+                    <span>0%</span>
+                    <span>100%</span>
+                  </div>
+                </Field>
+              </div>
             </div>
+
+            <details className="mt-5 border-t border-white/10 pt-4">
+              <summary className="cursor-pointer list-none text-sm text-[#cbb071] marker:hidden">
+                <span className="flex items-center justify-between gap-3">
+                  <span>Advanced assumptions</span>
+                  <span className="text-lg leading-none">+</span>
+                </span>
+              </summary>
+
+              <div className="mt-4 space-y-5">
+                <p className="text-xs leading-5 text-[#92939a]">
+                  Change these only if you know your current booking mix
+                  and the improvements you want to explore.
+                </p>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Bookings via OTAs (%)">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={otaShare}
+                      onChange={(e) =>
+                        setOtaShare(
+                          Math.max(0, Math.min(100, Number(e.target.value) || 0))
+                        )
+                      }
+                      className={inputClass}
+                    />
+                  </Field>
+
+                  <Field label="OTA commission (%)">
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={commission}
+                      onChange={(e) =>
+                        setCommission(
+                          Math.max(0, Math.min(100, Number(e.target.value) || 0))
+                        )
+                      }
+                      className={inputClass}
+                    />
+                  </Field>
+                </div>
+
+                <div className="space-y-4 rounded-xl bg-black/15 p-3">
+                  <p className="text-xs font-medium text-white">
+                    Improvements to explore
+                  </p>
+
+                  <RangeField
+                    label="Occupancy increase"
+                    value={occupancyIncrease}
+                    min={0}
+                    max={30}
+                    suffix=" points"
+                    onChange={setOccupancyIncrease}
+                  />
+
+                  <RangeField
+                    label="Nightly rate increase"
+                    value={rateIncrease}
+                    min={0}
+                    max={50}
+                    onChange={setRateIncrease}
+                  />
+
+                  <RangeField
+                    label="Shift from OTA to direct bookings"
+                    value={directShift}
+                    min={0}
+                    max={100}
+                    suffix=" points"
+                    onChange={setDirectShift}
+                  />
+                </div>
+              </div>
+            </details>
           </div>
 
-          {/* Revenue result */}
-          <div className="mt-7">
-            <p className="font-serif text-2xl leading-snug tracking-tight text-[#cbb071] sm:text-3xl">
-              Illustrative extra net revenue:{" "}
-              {numberFormat(results.extraNet, currency)} / year
+          {/* Immediate result */}
+          <div className="rounded-2xl border border-[#cbb071]/25 bg-gradient-to-br from-[#22232b] to-[#171922] p-5 sm:p-6">
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#b4b1a9]">
+              Illustrative additional net revenue
             </p>
 
-            <p className="mt-3 text-sm text-[#b9b6b0] sm:text-base">
-              About {numberFormat(results.extraNet / 12, currency)} per month
+            <p className="mt-3 break-words text-3xl font-medium tracking-tight text-[#cbb071] sm:text-4xl">
+              {formatMoney(results.extraNet, currency)}
+            </p>
+            <p className="mt-1 text-sm text-[#a8a7a2]">per year</p>
+
+            <div className="my-5 h-px bg-white/10" />
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-xl bg-white/[0.04] p-3">
+                <p className="text-xs text-[#a8a7a2]">Current net revenue</p>
+                <p className="mt-2 break-words text-base font-medium text-white">
+                  {formatMoney(results.today.netRevenue, currency)}
+                </p>
+                <p className="mt-1 text-[10px] text-[#85868d]">per year</p>
+              </div>
+
+              <div className="rounded-xl bg-white/[0.04] p-3">
+                <p className="text-xs text-[#a8a7a2]">With improvements</p>
+                <p className="mt-2 break-words text-base font-medium text-white">
+                  {formatMoney(results.improved.netRevenue, currency)}
+                </p>
+                <p className="mt-1 text-[10px] text-[#85868d]">per year</p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-center justify-between gap-3 text-sm">
+              <span className="text-[#a8a7a2]">Monthly difference</span>
+              <span className="text-right font-medium text-white">
+                {formatMoney(results.extraNet / 12, currency)}
+              </span>
+            </div>
+
+            <details className="mt-5 border-t border-white/10 pt-4">
+              <summary className="cursor-pointer text-xs text-[#cbb071]">
+                View revenue breakdown
+              </summary>
+
+              <div className="mt-3 space-y-3">
+                {breakdown.map((item) => (
+                  <div
+                    key={item.label}
+                    className="grid grid-cols-[1fr_auto_auto] items-center gap-2 text-xs"
+                  >
+                    <span className="text-[#a8a7a2]">{item.label}</span>
+                    <span className="text-[#d0cec9]">
+                      {formatMoney(item.today, currency)}
+                    </span>
+                    <span className="text-right text-white">
+                      {formatMoney(item.improved, currency)}
+                    </span>
+                  </div>
+                ))}
+
+                <div className="grid grid-cols-[1fr_auto_auto] gap-2 border-t border-white/10 pt-2 text-[10px] text-[#85868d]">
+                  <span>Per year</span>
+                  <span>Today</span>
+                  <span>Improved</span>
+                </div>
+
+                <p className="text-xs text-[#a8a7a2]">
+                  Estimated platform commission saved:{" "}
+                  <span className="text-white">
+                    {formatMoney(results.commissionSaved, currency)}
+                  </span>
+                </p>
+              </div>
+            </details>
+
+            <Link
+              href="#contact"
+              className="mt-5 flex min-h-11 w-full items-center justify-center rounded-full bg-[#cbb071] px-5 py-3 text-center text-xs font-semibold text-[#11131a] transition hover:bg-[#dfc58c]"
+            >
+              Discuss your property
+              <span className="ml-2" aria-hidden="true">→</span>
+            </Link>
+
+            <p className="mt-3 text-[10px] leading-4 text-[#85868d]">
+              Estimate only, not a forecast or guarantee. Assumes 365 days
+              per year. Seasonality, taxes, operating costs, payment fees
+              and marketing costs are excluded.
             </p>
           </div>
-
-          <p className="mt-5 max-w-[720px] text-xs leading-5 text-[#a5a29d]">
-            Planning estimate only. Assumes 365 available nights per year
-            and that the selected improvements are achieved. Actual results
-            depend on season, market demand, operating costs, taxes and your
-            property. This is not a guarantee or a forecast. Direct-booking
-            shifts reduce estimated platform commission; payment and
-            marketing costs are not included.
-          </p>
-
-          <Link
-            href="#contact"
-            className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-[#cbb071] px-6 py-3 text-center text-xs font-semibold uppercase tracking-[0.07em] text-[#101116] transition-colors hover:bg-[#dfc58c] sm:px-8 sm:text-sm"
-          >
-            Talk to an OTA Nexus Expert
-          </Link>
         </div>
       </div>
     </section>

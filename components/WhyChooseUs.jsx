@@ -5,31 +5,31 @@ import { motion } from "framer-motion";
 
 const values = [
   {
-    title: "Built around hospitality",
+    title: "Built Around Hospitality",
     description:
-      "We understand how properties earn, from rooms and rates to guest reviews, so advice fits how you actually run your business.",
+      "We understand room inventory, pricing, and guest reviews to deliver strategies tailored to your property.",
   },
   {
-    title: "One team, every channel",
+    title: "One Team, Every Channel",
     description:
-      "OTAs, pricing, advertising, content and your website work best together, so we keep them connected.",
+      "We bring OTAs, pricing, advertising, and direct bookings together in one coordinated strategy.",
   },
   {
-    title: "Plain-English reporting",
+    title: "Clear, Actionable Reporting",
     description:
-      "Clear updates on what is working, what isn’t and what we suggest next.",
+      "Understand what is working, where opportunities exist, and what to improve next.",
   },
   {
-    title: "Honest about results",
+    title: "Focused on Real Results",
     description:
-      "We don’t promise guaranteed outcomes. We set sensible goals and measure against them.",
+      "We set realistic goals, track performance, and make decisions based on meaningful data.",
   },
 ];
 
 const platforms = [
   { name: "Expedia", style: "font-semibold tracking-tight" },
   { name: "Hotels.com", style: "font-medium tracking-tight" },
-  { name: "Trip.com", style: "font-extrabold tracking-tight" },
+  { name: "Trip.com", style: "font-bold tracking-tight" },
   { name: "Tripadvisor", style: "font-bold tracking-tight" },
   { name: "trivago", style: "font-extrabold tracking-tight" },
   { name: "Vrbo", style: "font-bold italic tracking-tight" },
@@ -42,65 +42,65 @@ const WhyChooseUs = () => {
       id="why-us"
       className="overflow-hidden bg-[#0c0f14] text-[#f3f0e9]"
     >
-      <div className="mx-auto max-w-[1640px] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
         {/* Main statistic */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.65 }}
-          className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-10 lg:gap-14"
+          transition={{ duration: 0.6 }}
+          className="flex flex-col gap-3 border-b border-white/10 pb-8 sm:flex-row sm:items-center sm:gap-7 sm:pb-10"
         >
-          <h2 className="font-serif text-[100px] font-normal leading-none tracking-[-0.06em] text-[#cbb071] sm:text-[120px] lg:text-[150px]">
+          <h2 className="font-serif text-6xl font-normal leading-none tracking-tight text-[#cbb071] sm:text-7xl lg:text-8xl">
             50+
           </h2>
 
-          <p className="max-w-[560px] text-xl leading-relaxed tracking-tight text-[#eeeae3] sm:text-2xl lg:text-[30px] lg:leading-[1.65]">
-            Partnering with 50+ hotels to support hospitality growth.
-          </p>
+          <div className="max-w-lg">
+            <p className="text-lg font-medium leading-relaxed text-[#eeeae3] sm:text-xl">
+              Hotels partnered with us for hospitality growth.
+            </p>
+            <p className="mt-1 text-sm leading-6 text-[#a7a39b]">
+              Smarter distribution. Better performance. Sustainable growth.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Four value propositions */}
-        <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4 lg:gap-x-9">
+        {/* Value propositions */}
+        <div className="grid grid-cols-1 gap-7 py-9 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-9 lg:grid-cols-4 lg:gap-8 lg:py-11">
           {values.map((value, index) => (
             <motion.article
               key={value.title}
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.45, delay: index * 0.08 }}
+              className="border-l border-[#cbb071]/50 pl-4"
             >
-              <h3 className="mb-2 text-lg font-medium tracking-tight text-[#cbb071] sm:text-xl">
+              <h3 className="text-base font-semibold leading-snug tracking-tight text-[#cbb071] sm:text-[17px]">
                 {value.title}
               </h3>
-
-              <p className="max-w-[360px] text-base leading-7 text-[#c6c3bd] sm:text-[17px] sm:leading-8">
+              <p className="mt-2 text-sm leading-6 text-[#c6c3bd] sm:text-[15px] sm:leading-7">
                 {value.description}
               </p>
             </motion.article>
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="mt-16 border-t border-white/10 lg:mt-20" />
-
         {/* Booking platforms */}
-        <div className="pt-10 text-center">
-          <p className="mb-7 text-[11px] font-medium uppercase tracking-[0.18em] text-[#a7a39b] sm:text-sm sm:tracking-[0.2em]">
-            Booking and travel platforms we help properties grow on
+        <div className="border-t border-white/10 pt-8 sm:pt-9">
+          <p className="mb-6 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-[#a7a39b] sm:text-xs sm:tracking-[0.2em]">
+            Booking and travel platforms we support
           </p>
 
-          {/* Scrolling logo track */}
           <div className="relative overflow-hidden">
-            {/* Side fade effects */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#0c0f14] to-transparent sm:w-14" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#0c0f14] to-transparent sm:w-14" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#0c0f14] to-transparent sm:w-12" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#0c0f14] to-transparent sm:w-12" />
 
             <motion.div
-              className="flex w-max gap-4 py-1 sm:gap-6"
+              className="flex w-max gap-3 py-1 sm:gap-4"
               animate={{ x: ["0%", "-50%"] }}
               transition={{
-                duration: 28,
+                duration: 30,
                 ease: "linear",
                 repeat: Infinity,
               }}
@@ -108,28 +108,10 @@ const WhyChooseUs = () => {
               {[...platforms, ...platforms].map((platform, index) => (
                 <div
                   key={`${platform.name}-${index}`}
-                  className="flex h-[66px] w-[180px] shrink-0 items-center justify-center gap-2 rounded-2xl bg-[#f3eee5] px-5 text-[#565656] sm:h-[74px] sm:w-[215px]"
+                  className="flex h-14 w-36 shrink-0 items-center justify-center rounded-xl bg-[#f3eee5] px-3 text-[#565656] sm:h-16 sm:w-44"
                 >
-                  {platform.name === "Expedia" && (
-                    <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#dedbd4] text-lg font-bold">
-                      ↗
-                    </span>
-                  )}
-
-                  {platform.name === "Hotels.com" && (
-                    <span className="flex h-7 w-7 items-center justify-center rounded-md bg-[#d9d6cf] text-sm">
-                      ▣
-                    </span>
-                  )}
-
-                  {platform.name === "Tripadvisor" && (
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d9d6cf] text-sm">
-                      ◎
-                    </span>
-                  )}
-
                   <span
-                    className={`whitespace-nowrap text-[21px] sm:text-[25px] ${platform.style}`}
+                    className={`whitespace-nowrap text-lg sm:text-xl ${platform.style}`}
                   >
                     {platform.name}
                   </span>
@@ -138,8 +120,8 @@ const WhyChooseUs = () => {
             </motion.div>
           </div>
 
-          <p className="mt-5 text-xs text-[#99958e] sm:text-sm">
-            Logos are trademarks of their respective owners.
+          <p className="mt-4 text-center text-[11px] text-[#77756f]">
+            All trademarks belong to their respective owners.
           </p>
         </div>
       </div>

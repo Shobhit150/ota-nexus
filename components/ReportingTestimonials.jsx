@@ -1,7 +1,7 @@
+
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const testimonials = [
   {
@@ -62,38 +62,44 @@ const requirements = [
   "A website or booking engine that supports conversion tracking",
 ];
 
-const ReportingTestimonials = () => {
+export default function ReportingTestimonials() {
+  const reduceMotion = useReducedMotion();
+
+  const reveal = reduceMotion
+    ? {}
+    : { initial: { opacity: 0, y: 14 } };
+
   return (
     <section
       id="reporting"
-      className="bg-[#0b0e14] px-5 py-20 text-[#f3f0e9] sm:px-8 sm:py-24 lg:px-12 lg:py-28"
+      className="bg-[#0b0e14] px-4 py-14 text-[#f3f0e9] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-6xl">
         {/* Reporting */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          {...reveal}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.65 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: reduceMotion ? 0 : 0.4 }}
         >
-          <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.23em] text-[#cbb071] sm:text-xs">
+          <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#cbb071]">
             Reporting & Measurement
           </p>
 
-          <h2 className="max-w-4xl text-3xl font-normal leading-tight tracking-[-0.045em] sm:text-4xl lg:text-5xl">
+          <h2 className="mt-3 max-w-3xl text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             You should always know{" "}
             <span className="font-serif italic text-[#cbb071]">
               what's happening.
             </span>
           </h2>
 
-          <p className="mt-4 max-w-[540px] text-sm leading-7 text-[#c7c3bd] sm:text-base">
-            We report in plain language, with recommended next steps. The
-            exact format and frequency are agreed with you.
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-[#c7c3bd] sm:text-base sm:leading-7">
+            We report in plain language, with recommended next steps.
+            The exact format and frequency are agreed with you.
           </p>
 
-          <div className="mt-8 grid gap-9 md:grid-cols-2 md:gap-14">
-            <div>
+          <div className="mt-7 grid gap-7 md:grid-cols-2 md:gap-10 lg:gap-14">
+            <div className="min-w-0">
               <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#cbb071]">
                 What we can report on
               </h3>
@@ -102,16 +108,21 @@ const ReportingTestimonials = () => {
                 {reportingItems.map((item) => (
                   <li
                     key={item}
-                    className="flex gap-3 text-sm leading-6 text-[#d0ccc6]"
+                    className="flex items-start gap-3 text-sm leading-6 text-[#d0ccc6]"
                   >
-                    <span className="text-[#cbb071]">•</span>
+                    <span
+                      className="mt-0.5 text-[#cbb071]"
+                      aria-hidden="true"
+                    >
+                      •
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#cbb071]">
                 What we need from you
               </h3>
@@ -120,9 +131,14 @@ const ReportingTestimonials = () => {
                 {requirements.map((item) => (
                   <li
                     key={item}
-                    className="flex gap-3 text-sm leading-6 text-[#d0ccc6]"
+                    className="flex items-start gap-3 text-sm leading-6 text-[#d0ccc6]"
                   >
-                    <span className="text-[#cbb071]">•</span>
+                    <span
+                      className="mt-0.5 text-[#cbb071]"
+                      aria-hidden="true"
+                    >
+                      •
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -130,30 +146,31 @@ const ReportingTestimonials = () => {
             </div>
           </div>
 
-          <div className="mt-7 max-w-[650px] border-l border-[#cbb071] pl-4 text-xs leading-6 text-[#c7c3bd] sm:text-sm">
-            Some figures can only be reported when the underlying tracking
-            and data exist. If something can't be measured reliably, we'll
-            tell you rather than guess. Ask us during your consultation
-            about relevant examples for your type of property.
+          <div className="mt-6 max-w-3xl border-l border-[#cbb071] pl-4 text-xs leading-6 text-[#c7c3bd] sm:text-sm">
+            Some figures can only be reported when the underlying
+            tracking and data exist. If something can't be measured
+            reliably, we'll tell you rather than guess. Ask us during
+            your consultation about relevant examples for your type
+            of property.
           </div>
         </motion.div>
 
         {/* Testimonials */}
         <div
           id="testimonials"
-          className="mt-24 scroll-mt-28 sm:mt-32 lg:mt-40"
+          className="mt-20 scroll-mt-24 sm:mt-24 lg:mt-28"
         >
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            {...reveal}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.65 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: reduceMotion ? 0 : 0.4 }}
           >
-            <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.23em] text-[#cbb071] sm:text-xs">
+            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#cbb071]">
               What Our Clients Say
             </p>
 
-            <h2 className="text-3xl font-normal leading-tight tracking-[-0.045em] sm:text-4xl lg:text-5xl">
+            <h2 className="mt-3 max-w-4xl text-3xl font-normal leading-tight tracking-tight sm:text-4xl lg:text-5xl">
               Trusted by properties.{" "}
               <span className="font-serif italic text-[#cbb071]">
                 Focused on growth.
@@ -161,36 +178,39 @@ const ReportingTestimonials = () => {
             </h2>
           </motion.div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
             {testimonials.map((testimonial, index) => (
               <motion.article
                 key={testimonial.category}
-                initial={{ opacity: 0, y: 22 }}
+                initial={
+                  reduceMotion ? false : { opacity: 0, y: 14 }
+                }
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{
-                  duration: 0.5,
-                  delay: (index % 3) * 0.08,
+                  duration: reduceMotion ? 0 : 0.35,
+                  delay: reduceMotion ? 0 : (index % 3) * 0.05,
                 }}
-                className={`flex h-full flex-col rounded-xl border bg-[#15171e] p-5 transition-colors duration-300 hover:border-[#cbb071]/60 sm:p-6 ${
+                className={`flex min-w-0 flex-col rounded-xl border bg-[#15171e] p-4 transition-colors duration-300 hover:border-[#cbb071]/60 sm:p-5 ${
                   index === 1
-                    ? "border-[#8c7547]"
+                    ? "border-[#8c7547]/70"
                     : "border-white/10"
                 }`}
               >
-                <p className="mb-4 text-[9px] font-medium uppercase tracking-[0.18em] text-[#cbb071]">
+                <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.16em] text-[#cbb071]">
                   {testimonial.category}
                 </p>
 
-                <blockquote className="flex-1 font-serif text-sm leading-7 text-[#e8e3da]">
+                <blockquote className="flex-1 font-serif text-sm leading-6 text-[#e8e3da]">
                   “{testimonial.quote}”
                 </blockquote>
 
-                <div className="mt-5 border-t border-white/10 pt-4">
-                  <p className="text-xs font-semibold text-[#f3f0e9]">
+                <div className="mt-5 border-t border-white/10 pt-3">
+                  <p className="text-sm font-semibold text-[#f3f0e9]">
                     {testimonial.name}
                   </p>
-                  <p className="mt-1 text-[11px] leading-5 text-[#a9a49c]">
+
+                  <p className="mt-1 text-xs leading-5 text-[#a9a49c]">
                     {testimonial.company}
                   </p>
                 </div>
@@ -201,6 +221,4 @@ const ReportingTestimonials = () => {
       </div>
     </section>
   );
-};
-
-export default ReportingTestimonials;
+}

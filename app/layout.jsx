@@ -1,5 +1,6 @@
 import { Fraunces, Inter } from 'next/font/google';
 import './globals.css';
+import FloatingSocialCTA from '@/components/FloatingSocialCTA';
 
 const display = Fraunces({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-fraunces' });
 const sans = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600'], variable: '--font-inter' });
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         <a href="#main" className=""></a>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         {children}
+        <FloatingSocialCTA />
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
+
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const steps = [
   {
@@ -9,7 +9,7 @@ const steps = [
     title: "Audit",
     subtitle: "Understand the property's current performance.",
     description:
-      "We review your online listings, pricing, website, guest reviews, competitors and digital presence to find gaps and opportunities.",
+      "We review your online listings, pricing, website, guest reviews, competitors and digital presence to identify gaps and opportunities.",
   },
   {
     number: "02",
@@ -37,77 +37,82 @@ const steps = [
     title: "Reputation",
     subtitle: "Build trust before guests arrive.",
     description:
-      "We help manage reviews, respond to feedback professionally and spot areas to improve.",
+      "We help manage reviews, respond to feedback professionally and identify areas for improvement.",
   },
   {
     number: "06",
     title: "Scale",
     subtitle: "Turn performance insights into growth.",
     description:
-      "We track results, study booking trends and keep refining the strategy as new opportunities appear.",
+      "We track results, study booking trends and refine the strategy as new opportunities emerge.",
   },
 ];
 
-const HowWeWork = () => {
+export default function HowWeWork() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       id="how-we-work"
-      className="bg-[#f3efe7] px-5 py-16 text-[#171923] sm:px-8 sm:py-20 lg:px-12 lg:py-24"
+      className="bg-[#f3efe7] px-4 py-14 text-[#171923] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-6xl">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.55 }}
-          className="mb-10 sm:mb-12"
+          viewport={{ once: true }}
+          transition={{ duration: reduceMotion ? 0 : 0.4 }}
+          className="mb-8 max-w-3xl sm:mb-10"
         >
-          <p className="text-[9px] font-medium uppercase tracking-[0.22em] text-[#89672e] sm:text-[10px]">
+          <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#89672e]">
             How We Work
           </p>
 
-          <h2 className="mt-3 text-[clamp(1.8rem,3.3vw,3rem)] leading-[1.2] tracking-[-0.045em]">
+          <h2 className="mt-3 text-3xl leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             A simple, step-by-step{" "}
             <span className="font-serif italic text-[#89672e]">
               growth process.
             </span>
           </h2>
 
-          <p className="mt-3 max-w-[650px] text-xs leading-6 text-[#55534f] sm:text-sm sm:leading-7">
-            We help hotels, resorts, villas, homestays and vacation rentals
-            improve their online presence, attract more guests and grow revenue.
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-[#55534f] sm:text-base sm:leading-7">
+            We help hotels, resorts, villas, homestays and vacation
+            rentals improve their online presence, attract more guests
+            and grow revenue.
           </p>
         </motion.div>
 
         {/* Process steps */}
-        <div className="border-t border-[#171923]/20">
+        <div className="border-t border-[#171923]/15">
           {steps.map((step, index) => (
             <motion.article
               key={step.number}
-              initial={{ opacity: 0, y: 12 }}
+              initial={
+                reduceMotion ? false : { opacity: 0, y: 10 }
+              }
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{
-                duration: 0.4,
-                delay: index * 0.04,
+                duration: reduceMotion ? 0 : 0.35,
+                delay: reduceMotion ? 0 : index * 0.035,
               }}
-              className="grid grid-cols-[38px_minmax(0,1fr)] gap-3 border-b border-[#171923]/20 py-5 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-6 sm:py-6"
+              className="grid grid-cols-[34px_minmax(0,1fr)] gap-3 border-b border-[#171923]/15 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-5 sm:py-6 lg:grid-cols-[52px_minmax(0,1fr)] lg:gap-6"
             >
-              <span className="font-serif text-[23px] leading-none tracking-[-0.04em] text-[#89672e] sm:text-[26px]">
+              <span className="pt-0.5 font-serif text-xl leading-none tracking-tight text-[#89672e] sm:text-2xl">
                 {step.number}
               </span>
 
-              <div>
-                <h3 className="text-sm font-medium leading-5 sm:text-base">
+              <div className="min-w-0">
+                <h3 className="text-base font-medium leading-snug sm:text-lg">
                   {step.title}
                 </h3>
 
-                <p className="mt-0.5 text-[11px] font-medium leading-5 text-[#171923] sm:text-xs">
+                <p className="mt-1 text-sm font-medium leading-5 text-[#292923]">
                   {step.subtitle}
                 </p>
 
-                <p className="mt-0.5 max-w-[1100px] text-[11px] leading-[1.8] text-[#55534f] sm:text-xs sm:leading-5">
+                <p className="mt-2 max-w-3xl text-sm leading-6 text-[#55534f]">
                   {step.description}
                 </p>
               </div>
@@ -117,6 +122,4 @@ const HowWeWork = () => {
       </div>
     </section>
   );
-};
-
-export default HowWeWork;
+}

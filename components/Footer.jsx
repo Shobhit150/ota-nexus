@@ -1,6 +1,4 @@
-"use client";
 
-import React from "react";
 import Link from "next/link";
 
 const exploreLinks = [
@@ -12,66 +10,129 @@ const exploreLinks = [
   { name: "FAQs", href: "#faqs" },
 ];
 
+const ArrowUpRight = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M7 17 17 7M7 7h10v10" />
+  </svg>
+);
+
 export default function Footer() {
   return (
-    <footer className="bg-[#0c0f14] text-[#d0ccc6]">
-      <div className="mx-auto max-w-[1640px] px-6 pb-8 pt-10 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_2fr] lg:gap-12">
+    <footer className="border-t border-white/[0.06] bg-[#0c0f14] text-[#d0ccc6]">
+      <div className="mx-auto max-w-6xl px-5 pb-5 pt-10 sm:px-8 sm:pt-12">
+        <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_1fr] lg:gap-12">
           {/* Brand */}
           <div>
             <Link
               href="/"
-              className="inline-block text-[17px] font-bold tracking-[0.23em] text-[#f3f0e9]"
+              aria-label="OTA Nexus home"
+              className="inline-flex items-center gap-2 text-sm font-bold tracking-[0.2em] text-[#f3f0e9] transition hover:opacity-80"
             >
               OTA <span className="text-[#c8a968]">NEXUS</span>
             </Link>
 
-            <p className="mt-4 max-w-[300px] text-[15px] leading-7 text-[#aaa8a3]">
-              Your hospitality growth partner — from distribution to digital
-              marketing.
+            <p className="mt-3 max-w-xs text-sm leading-6 text-[#92949c]">
+              Your hospitality growth partner — from distribution and revenue
+              strategy to digital marketing.
             </p>
+
+            <a
+              href="https://wa.me/919560440478"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2 text-xs font-medium text-[#c8a968] transition hover:text-[#e3ca91]"
+            >
+              Discuss your property
+              <ArrowUpRight />
+            </a>
           </div>
 
           {/* Explore */}
-          <div>
-            <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.16em] text-[#c8a968]">
+          <nav aria-label="Footer navigation">
+            <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c8a968]">
               Explore
             </h2>
 
-            <ul className="space-y-3">
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-1">
               {exploreLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-[15px] transition-colors duration-200 hover:text-[#c8a968]"
+                    className="text-sm text-[#a9a8a5] transition-colors hover:text-[#e3ca91]"
                   >
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Contact */}
           <div>
-            <h2 className="mb-4 text-xs font-medium uppercase tracking-[0.16em] text-[#c8a968]">
-              Contact
+            <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#c8a968]">
+              Get in touch
             </h2>
 
-            <div className="space-y-3 text-[15px]">
+            <div className="space-y-3">
               <a
                 href="https://wa.me/919560440478"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block transition-colors hover:text-[#c8a968]"
+                className="group flex items-start gap-3 text-sm text-[#a9a8a5] transition hover:text-[#e3ca91]"
               >
-                WhatsApp +91 95604 40478
+                <span className="mt-0.5 shrink-0 text-[#c8a968]">
+                  <svg
+                    width="17"
+                    height="17"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-5.3A8.4 8.4 0 1 1 21 11.5Z" />
+                    <path d="M8.5 8.5c.4 2 2 3.6 4 4" />
+                  </svg>
+                </span>
+                <span>
+                  <span className="block text-[#e0ddd6]">WhatsApp</span>
+                  <span className="mt-0.5 block text-xs text-[#858892]">
+                    +91 95604 40478
+                  </span>
+                </span>
               </a>
 
               <a
                 href="mailto:otanexus0@gmail.com"
-                className="block transition-colors hover:text-[#c8a968]"
+                className="flex items-center gap-3 break-all text-sm text-[#a9a8a5] transition hover:text-[#e3ca91]"
               >
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="shrink-0 text-[#c8a968]"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
                 otanexus0@gmail.com
               </a>
 
@@ -79,35 +140,56 @@ export default function Footer() {
                 href="https://www.instagram.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 transition-colors hover:text-[#c8a968]"
+                className="inline-flex items-center gap-3 text-sm text-[#a9a8a5] transition hover:text-[#e3ca91]"
               >
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   width="17"
                   height="17"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="1.8"
+                  strokeWidth="1.6"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"
+                  className="shrink-0 text-[#c8a968]"
                 >
                   <rect x="3" y="3" width="18" height="18" rx="5" />
                   <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" />
+                  <circle cx="17.5" cy="6.5" r=".7" fill="currentColor" />
                 </svg>
-                Follow us on Instagram
+                Instagram
+                <ArrowUpRight />
               </a>
             </div>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-10 border-t border-white/[0.06] pt-5">
-          <p className="text-sm text-[#aaa8a3]">
+        {/* Bottom bar */}
+        <div className="mt-9 flex flex-col gap-3 border-t border-white/[0.08] pt-5 sm:mt-10 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-[#858892]">
             © {new Date().getFullYear()} OTA Nexus. All rights reserved.
           </p>
+
+          <a
+            href="#top"
+            className="inline-flex w-fit items-center gap-2 text-xs text-[#a9a8a5] transition hover:text-[#c8a968]"
+          >
+            Back to top
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </a>
         </div>
       </div>
     </footer>

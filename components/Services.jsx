@@ -1,16 +1,21 @@
+
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
 
 const services = [
   {
     letter: "A",
     title: "OTA Management & Distribution",
     description:
-      "Your listings are hard to find, inconsistent across platforms, or hard to keep up to date.",
+      "Your listings are hard to find, inconsistent across platforms, or difficult to keep updated.",
     image:
       "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=85",
     benefits: [
@@ -24,7 +29,7 @@ const services = [
     letter: "B",
     title: "Revenue Management & Pricing Strategy",
     description:
-      "Prices feel like guesswork, and you’re unsure whether you’re leaving money on the table.",
+      "Prices feel like guesswork, and you are unsure whether you are leaving money on the table.",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=85",
     benefits: [
@@ -38,7 +43,7 @@ const services = [
     letter: "C",
     title: "Performance Marketing & Paid Advertising",
     description:
-      "Ad spend keeps rising, but it’s hard to see which campaigns bring real enquiries or bookings.",
+      "Ad spend keeps rising, but it is hard to see which campaigns generate real enquiries or bookings.",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=85",
     benefits: [
@@ -54,7 +59,7 @@ const services = [
     letter: "D",
     title: "Social Media & Content Marketing",
     description:
-      "Posting is inconsistent, and your content doesn’t show what makes the property special.",
+      "Inconsistent posting makes it harder to communicate what makes your property special.",
     image:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85",
     benefits: [
@@ -68,7 +73,7 @@ const services = [
     letter: "E",
     title: "Website Development & Direct Bookings",
     description:
-      "Guests visit your website but don’t enquire or book, so OTAs keep the commission.",
+      "Guests visit your website but do not enquire or book, leaving you reliant on OTA commissions.",
     image:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85",
     benefits: [
@@ -97,7 +102,7 @@ const services = [
     letter: "G",
     title: "Reputation & Guest Experience",
     description:
-      "Reviews go unanswered, or the same complaints keep coming back.",
+      "Reviews go unanswered, or the same guest complaints keep returning.",
     image:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85",
     benefits: [
@@ -111,7 +116,7 @@ const services = [
     letter: "H",
     title: "Sales & Partnerships",
     description:
-      "Business leans on walk-ins and OTAs, with little corporate or travel-trade demand.",
+      "Your business relies on walk-ins and OTAs, with limited corporate or travel-trade demand.",
     image:
       "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=85",
     benefits: [
@@ -124,49 +129,62 @@ const services = [
   },
 ];
 
-function ServiceCard({ service, index, expanded, onToggle }) {
+function ServiceCard({
+  service,
+  index,
+  expanded,
+  onToggle,
+  reduceMotion,
+}) {
+  const panelId = `service-benefits-${service.letter}`;
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: 22 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.45, delay: (index % 2) * 0.08 }}
-      className={`group overflow-hidden rounded-xl border ${
+      viewport={{ once: true, amount: 0.08 }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.4,
+        delay: reduceMotion ? 0 : (index % 2) * 0.05,
+      }}
+      className={`group min-w-0 overflow-hidden rounded-xl border bg-[#191c25] transition-colors duration-300 hover:border-[#cbb071]/60 ${
         service.featured
-          ? "border-[#8e7545]/70"
+          ? "border-[#8e7545]/60"
           : "border-white/10"
-      } bg-[#191c25] transition-colors duration-300 hover:border-[#cbb071]/60 ${
-        service.horizontal
-          ? "lg:col-span-2 lg:flex"
-          : ""
+      } ${
+        service.horizontal ? "lg:col-span-2 lg:flex" : ""
       }`}
     >
       {/* Image */}
       <div
-        className={`relative overflow-hidden ${
+        className={`relative shrink-0 overflow-hidden ${
           service.horizontal
-            ? "aspect-[16/9] lg:aspect-auto lg:min-h-[220px] lg:w-[42%] lg:shrink-0"
-            : "aspect-[2/1]"
+            ? "aspect-[16/9] lg:aspect-auto lg:min-h-[200px] lg:w-[38%]"
+            : "aspect-[2.2/1]"
         }`}
       >
         <Image
           src={service.image}
-          alt={service.title}
+          alt={`${service.title} service`}
           fill
           sizes={
             service.horizontal
-              ? "(min-width: 1024px) 42vw, 100vw"
-              : "(min-width: 1024px) 50vw, 100vw"
+              ? "(min-width: 1024px) 38vw, 100vw"
+              : "(min-width: 768px) 50vw, 100vw"
           }
           unoptimized
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          className={`object-cover ${
+            reduceMotion
+              ? ""
+              : "transition-transform duration-700 group-hover:scale-105"
+          }`}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
-        <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-[#cbb071]">
+      <div className="flex min-w-0 flex-1 flex-col p-4 lg:p-4">
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#cbb071]">
           Service {service.letter}
         </p>
 
@@ -174,23 +192,25 @@ function ServiceCard({ service, index, expanded, onToggle }) {
           {service.title}
         </h3>
 
-        <p className="mt-2 text-xs leading-[1.8] text-[#c8c4bd] sm:text-sm">
+        <p className="mt-2 text-sm leading-6 text-[#c8c4bd]">
           {service.description}
         </p>
 
         {/* Expandable benefits */}
-        <div className="mt-3 border-t border-white/15 pt-3">
+        <div className="mt-4 border-t border-white/10 pt-3">
           <button
             type="button"
             onClick={onToggle}
             aria-expanded={expanded}
-            className="flex w-full items-center justify-between gap-3 py-1 text-left text-xs font-medium text-[#f1eee8] transition-colors hover:text-[#cbb071]"
+            aria-controls={panelId}
+            className="flex min-h-10 w-full items-center justify-between gap-3 rounded-sm text-left text-sm font-medium text-[#f1eee8] transition-colors hover:text-[#cbb071] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cbb071] focus-visible:ring-offset-2 focus-visible:ring-offset-[#191c25]"
           >
             <span>What you get</span>
+
             <motion.span
               animate={{ rotate: expanded ? 45 : 0 }}
-              transition={{ duration: 0.2 }}
-              className="text-base font-light text-[#cbb071]"
+              transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              className="text-lg font-light text-[#cbb071]"
               aria-hidden="true"
             >
               +
@@ -200,19 +220,35 @@ function ServiceCard({ service, index, expanded, onToggle }) {
           <AnimatePresence initial={false}>
             {expanded && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
+                id={panelId}
+                initial={
+                  reduceMotion
+                    ? false
+                    : { height: 0, opacity: 0 }
+                }
                 animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25 }}
+                exit={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { height: 0, opacity: 0 }
+                }
+                transition={{
+                  duration: reduceMotion ? 0 : 0.22,
+                }}
                 className="overflow-hidden"
               >
                 <ul className="space-y-2 pb-2 pt-3">
                   {service.benefits.map((benefit) => (
                     <li
                       key={benefit}
-                      className="flex items-start gap-2 text-xs leading-5 text-[#c8c4bd] sm:text-sm"
+                      className="flex items-start gap-2 text-sm leading-5 text-[#c8c4bd]"
                     >
-                      <span className="mt-1 text-[#cbb071]">—</span>
+                      <span
+                        className="mt-0.5 text-[#cbb071]"
+                        aria-hidden="true"
+                      >
+                        —
+                      </span>
                       <span>{benefit}</span>
                     </li>
                   ))}
@@ -220,9 +256,10 @@ function ServiceCard({ service, index, expanded, onToggle }) {
 
                 <Link
                   href="#contact"
-                  className="mt-2 inline-flex items-center gap-2 pb-2 text-xs font-medium text-[#cbb071] transition-colors hover:text-[#e0c58a]"
+                  className="mt-2 inline-flex min-h-10 items-center gap-2 text-sm font-medium text-[#cbb071] transition-colors hover:text-[#e0c58a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cbb071]"
                 >
-                  Discuss this service <span aria-hidden="true">→</span>
+                  Discuss this service
+                  <span aria-hidden="true">→</span>
                 </Link>
               </motion.div>
             )}
@@ -235,49 +272,54 @@ function ServiceCard({ service, index, expanded, onToggle }) {
 
 export default function Services() {
   const [expandedService, setExpandedService] = useState(null);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
       id="services"
-      className="bg-[#10131c] px-5 py-16 text-[#f2efe9] sm:px-8 sm:py-20 lg:px-12 lg:py-24"
+      className="bg-[#10131c] px-4 py-14 text-[#f2efe9] sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
-      <div className="mx-auto max-w-[1640px]">
+      <div className="mx-auto max-w-6xl">
         {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 max-w-[1000px] sm:mb-10"
+          transition={{ duration: reduceMotion ? 0 : 0.4 }}
+          className="mb-8 max-w-3xl sm:mb-10"
         >
           <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-[#cbb071]">
-            Services
+            Our Services
           </p>
 
-          <h2 className="mt-3 text-[clamp(1.9rem,3.3vw,3rem)] leading-[1.2] tracking-[-0.045em]">
+          <h2 className="mt-3 text-3xl leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             Practical help across the{" "}
             <span className="font-serif italic text-[#cbb071]">
               whole guest journey.
             </span>
           </h2>
 
-          <p className="mt-3 max-w-[680px] text-sm leading-6 text-[#cbc7c0] sm:leading-7">
-            Use only what your property needs. After understanding your goals,
-            we recommend the relevant services instead of pushing a package.
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-[#cbc7c0] sm:text-base sm:leading-7">
+            Use only what your property needs. We understand your goals
+            and recommend relevant services instead of pushing a
+            one-size-fits-all package.
           </p>
         </motion.div>
 
         {/* Responsive service grid */}
-        <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:gap-4">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
           {services.map((service, index) => (
             <ServiceCard
               key={service.letter}
               service={service}
               index={index}
               expanded={expandedService === service.letter}
+              reduceMotion={reduceMotion}
               onToggle={() =>
                 setExpandedService((current) =>
-                  current === service.letter ? null : service.letter
+                  current === service.letter
+                    ? null
+                    : service.letter
                 )
               }
             />

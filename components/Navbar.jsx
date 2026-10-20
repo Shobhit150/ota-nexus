@@ -14,7 +14,7 @@ const navLinks = [
   { name: "Contact", href: "/#contact" },
 ];
 
-const Navbar = () => {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -27,15 +27,17 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
     <motion.header
       initial={false}
-      className={`sticky top-0 z-50 w-full border-b transition-colors duration-300 ${
+      className={`fixed top-0 left-0 z-50 w-full border-b transition-colors duration-300 ${
         scrolled
-          ? "border-white/10 bg-[#0c0f14]/95 shadow-lg backdrop-blur-xl"
+          ? "border-white/20 bg-[#0c0f14]/95 shadow-lg backdrop-blur-xl"
           : "border-transparent bg-transparent"
       }`}
     >
@@ -126,7 +128,6 @@ const Navbar = () => {
                 </motion.div>
               ))}
 
-              {/* Mobile CTA */}
               <Link
                 href="/#contact"
                 onClick={() => setMenuOpen(false)}
@@ -140,6 +141,4 @@ const Navbar = () => {
       </AnimatePresence>
     </motion.header>
   );
-};
-
-export default Navbar;
+}

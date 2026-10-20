@@ -1,3 +1,4 @@
+
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -15,21 +16,25 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0c0f14]">
+      {/* Fixed navbar stays above the entire page */}
       <Navbar />
 
       {/* Hero background */}
-      <div className="relative isolate overflow-hidden bg-[#0c0f14]">
+      <div className="relative isolate bg-[#0c0f14]">
+        {/* Background image */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/hero.webp')" }}
         />
 
+        {/* Dark overlay */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-r from-[#080b10]/75 via-[#080b10]/45 to-[#080b10]/35"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#080b10]/75 via-[#080b10]/45 to-[#080b10]/35"
         />
 
+        {/* Bottom fade */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-72 bg-gradient-to-b from-transparent via-[#0c0f14]/70 to-[#0c0f14] sm:h-96"

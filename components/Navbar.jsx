@@ -31,7 +31,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.header className="sticky top-0 z-50 w-full border-b border-transparent">
+    <motion.header
+      initial={false}
+      className={`sticky top-0 z-50 w-full border-b transition-colors duration-300 ${
+        scrolled
+          ? "border-white/10 bg-[#0c0f14]/95 shadow-lg backdrop-blur-xl"
+          : "border-transparent bg-transparent"
+      }`}
+    >
       <nav className="mx-auto flex h-[84px] max-w-[1640px] items-center justify-between px-5 sm:px-8 lg:px-10 xl:px-12">
         {/* Logo */}
         <Link

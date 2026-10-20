@@ -11,40 +11,35 @@ import RevenueEstimator from "@/components/RevenueEstimator";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0c0f14]">
-      {/* Hero background and fade */}
+      <Navbar />
+
+      {/* Hero background */}
       <div className="relative isolate overflow-hidden bg-[#0c0f14]">
-        {/* Background image */}
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('/hero.webp')",
-          }}
+          style={{ backgroundImage: "url('/hero.webp')" }}
         />
 
-        {/* Dark overlay for readable text */}
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-r from-[#080b10]/75 via-[#080b10]/45 to-[#080b10]/35"
         />
 
-        {/* Fade image into the page background at the bottom */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-72 bg-gradient-to-b from-transparent via-[#0c0f14]/70 to-[#0c0f14] sm:h-96"
         />
 
-        {/* Navbar and Hero */}
         <div className="relative z-10">
-          <Navbar />
           <Hero />
         </div>
       </div>
 
-      {/* Remaining sections use the same dark background */}
       <WhyChooseUs />
       <PropertyChallenges />
       <TheNexus />
